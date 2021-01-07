@@ -1,36 +1,21 @@
-# Config file for automatic testing at travis-ci.org
-
 language: python
-
 python:
-  - "3.8"
-
+- '3.8'
 env:
-  - TOX_ENV=py38
-
+- TOX_ENV=py38
 matrix:
   fast_finish: true
-
-# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -r requirements_test.txt
-
-# command to run tests using coverage, e.g. python setup.py test
 script: tox -e $TOX_ENV
-
 after_success:
-  - codecov -e TOX_ENV  
-# Assuming you have installed the travis-ci CLI tool, after you
-# create the Github repo and add it to Travis, run the
-# following command to finish PyPI deployment setup:
-# $ travis encrypt --add deploy.password
+- codecov -e TOX_ENV
 deploy:
   provider: pypi
   distributions: sdist bdist_wheel
   user: csae8092
   password:
-    secure: PLEASE_REPLACE_ME
+    secure: qhiKBKeAVSrXXy0udvBV77iymoKHcNCwdt3BDGvbgllAlm9Lrv1rlkb+Q4TTBsmecVsuOiheP8b7isCDeDkjOw8Pi0DUVcP7CpdnF+tVyaRpWYMCrp6D4so65RLXKKNO9gAzzxaGWogQlXefegMvtlSnRjuEpucYBeSg0sCQXiaakYEYpcJ8IjTEfEiPUV5xNEUF/9ylzc1Q/VuNHRsFj4QFeg691kpANaheiZ2BXYW4GMscodkaLRisXUTS+GO75w0BnoMYUZSzdC2DuKAONSNEUEPBpdq90yz7FOVaNFae9YTKyAcmGOhXvIODaNXNkxxyYNEeVpXp/9SclsaEn36sodI/jmF7Yx/bw3t8tKVsxCopAMT93XxYuuCfDCvKPp8FtuyyO9ekepn/zzEe9ZMRIzIaI6JQhN/L3Pm6mBaMPasIKCvM5Rz0vBlynLGrGMRN7Wa3KGGcmhXdAjIPb4uMWgcfBsEy64ns+IW+mNObCRH0NKHSrIwKGGWUWole40b1hX2qXJzSDNNS7wvqT9/hp7R6ggKbGxhusZbS3O72WUWMlXYdY4jmvVscYKToNnjwx6GIgbPwL07Wt78X9hHfCQ9EgBep+PXOmNztg4SzEmGZdNCFZKurteUJe9+B6vKfINzUaIT/FeXyM35MbNiF8wRa1ValMILUyAQ/gHg=
   on:
     tags: true
     repo: acdh-oeaw/acdh_geonames_utils
     python: 3.8
-
