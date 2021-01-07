@@ -1,15 +1,24 @@
-# Config file for automatic testing at travis-ci.com
+# Config file for automatic testing at travis-ci.org
 
 language: python
+
 python:
-  - 3.8
+  - "3.8"
 
-# Command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
-install: pip install -U tox-travis
+env:
+  - TOX_ENV=py38
 
-# Command to run tests, e.g. python setup.py test
-script: tox
+matrix:
+  fast_finish: true
 
+# command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
+install: pip install -r requirements_test.txt
+
+# command to run tests using coverage, e.g. python setup.py test
+script: tox -e $TOX_ENV
+
+after_success:
+  - codecov -e TOX_ENV  
 # Assuming you have installed the travis-ci CLI tool, after you
 # create the Github repo and add it to Travis, run the
 # following command to finish PyPI deployment setup:
@@ -24,3 +33,4 @@ deploy:
     tags: true
     repo: acdh-oeaw/acdh_geonames_utils
     python: 3.8
+
