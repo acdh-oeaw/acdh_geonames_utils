@@ -50,6 +50,13 @@ class TestAcdh_geonames_utils(unittest.TestCase):
         """Test loading file into pandas.DataFrame"""
         df = gn.countries_as_df(TEST_GN_FILE)
         self.assertEqual(len(df), 9356)
+    
+    def test_005_dl_to_df(self):
+        """Test loading download into pandas.DataFrame"""
+        good_df = gn.donwload_to_df('YU')
+        bad_df = gn.donwload_to_df('YUUU')
+        self.assertEqual(len(good_df), 1)
+        self.assertFalse(bad_df)
 
     def test_command_line_interface(self):
         """Test the CLI."""

@@ -95,3 +95,27 @@ def countries_as_df(input_file):
 
     df = pd.read_csv(input_file, sep='\t', names=GN_PL_HEADERS)
     return df
+
+
+def donwload_to_df(country_code, out_dir='temp'):
+    """
+    downloads and unzipps a geonames country zip like e.g.\
+        http://download.geonames.org/export/dump/AT.zip \
+            and returns the data as pandas.DataFrame
+
+    :param country_code: The country code of the country to download e.g. AT
+    :type country_code: str
+
+    :param out_dir: a directory path to store the downloaded file
+    :type out_dir: str
+
+    :return: The data as pandas.DataFrame
+    :rtype: `pandas.DataFrame`
+    """
+
+    input_file = download_and_unzip_country_zip(country_code, out_dir=out_dir)
+    if input_file:
+        df = countries_as_df(input_file)
+    else:
+        df = None
+    return df
