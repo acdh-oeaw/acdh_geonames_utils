@@ -6,8 +6,11 @@
 import unittest
 from click.testing import CliRunner
 
-from acdh_geonames_utils import acdh_geonames_utils
+from acdh_geonames_utils import acdh_geonames_utils as gn
 from acdh_geonames_utils import cli
+
+good_country_code = 'YU'
+bad_country_code = 'BAAAD'
 
 
 class TestAcdh_geonames_utils(unittest.TestCase):
@@ -19,8 +22,12 @@ class TestAcdh_geonames_utils(unittest.TestCase):
     def tearDown(self):
         """Tear down test fixtures, if any."""
 
-    def test_000_something(self):
-        """Test something."""
+    def test_001_something(self):
+        """Test download of zip."""
+        good = gn.download_country_zip(good_country_code)
+        bad = gn.download_country_zip(bad_country_code)
+        self.assertTrue(good.endswith(f"{good_country_code}.zip"))
+        self.assertEqual(bad, "")
 
     def test_command_line_interface(self):
         """Test the CLI."""

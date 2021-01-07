@@ -20,6 +20,14 @@ acdh\_geonames\_utils.cli module
     :undoc-members:
     :show-inheritance:
 
+acdh\_geonames\_utils.config module
+-----------------------------------
+
+.. automodule:: acdh_geonames_utils.config
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------
