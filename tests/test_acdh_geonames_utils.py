@@ -2,7 +2,7 @@
 
 """Tests for `acdh_geonames_utils` package."""
 
-
+import os
 import unittest
 from click.testing import CliRunner
 
@@ -11,6 +11,11 @@ from acdh_geonames_utils import cli
 
 good_country_code = 'YU'
 bad_country_code = 'BAAAD'
+
+TEST_GN_FILE = os.path.join(
+    "./fixtures",
+    "AL.txt"
+)
 
 
 class TestAcdh_geonames_utils(unittest.TestCase):
@@ -30,16 +35,21 @@ class TestAcdh_geonames_utils(unittest.TestCase):
         self.assertEqual(bad, "")
 
     def test_002_download_and_unzip(self):
-        """Test download of zip."""
+        """Test download and unzip."""
         good = gn.download_and_unzip_country_zip(good_country_code)
         bad = gn.download_and_unzip_country_zip(bad_country_code)
         self.assertTrue(good.endswith(f"{good_country_code}.txt"))
         self.assertEqual(bad, "")
 
     def test_003_unzip(self):
-        """Test download of zip."""
+        """Test unzipping of zip."""
         bad = gn.unzip_country_zip("")
         self.assertEqual(bad, "")
+
+    def test_004_file_to_df(self):
+        """Test loading file into pandas.DataFrame"""
+        df = gn.countries_as_df(TEST_GN_FILE)
+        self.assertEqual(len(df), 9356)
 
     def test_command_line_interface(self):
         """Test the CLI."""

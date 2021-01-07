@@ -2,8 +2,9 @@
 import os
 import zipfile
 import requests
+import pandas as pd
 
-from . config import GN_DL_URL
+from . config import GN_DL_URL, GN_PL_HEADERS
 
 
 def download_country_zip(country_code, out_dir='temp'):
@@ -78,3 +79,19 @@ def download_and_unzip_country_zip(country_code, out_dir='temp'):
     else:
         unzipped = ""
     return unzipped
+
+
+def countries_as_df(input_file):
+    """
+    returns a geonames-download file as pandas Dataframe objects
+
+    :param input_file: The location of an unzipped geonames\
+        file e.g. temp/AT.txt
+    :type input_file: str
+
+    :return: a pandas.Dataframe objects
+    :rtype: pandas.Dataframe
+    """
+
+    df = pd.read_csv(input_file, sep='\t', names=GN_PL_HEADERS)
+    return df
