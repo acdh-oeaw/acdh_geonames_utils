@@ -1,5 +1,6 @@
 """Main module."""
 import os
+import zipfile
 import requests
 
 from . config import GN_DL_URL
@@ -8,7 +9,8 @@ from . config import GN_DL_URL
 def download_country_zip(country_code, out_dir='temp'):
     """
     downloads a geonames country zip like e.g.\
-        http://download.geonames.org/export/dump/AT.zip
+        http://download.geonames.org/export/dump/AT.zip \
+            and returns the location of the zipped file
 
     :param country_code: The country code of the country to download e.g. AT
     :type country_code: str
@@ -31,3 +33,48 @@ def download_country_zip(country_code, out_dir='temp'):
         return save_path
     else:
         return ""
+
+
+def unzip_country_zip(zipped_file):
+    """
+    unzipps a geonames country zip like e.g.\
+        temp/AT.zip and returns the filename of the unzipped file
+
+    :param country_code: The location of the zipped file e.g. temp/AT.zip
+    :type country_code: str
+
+    :return: The unzipped file e.g. temp/AT.txt
+    :rtype: str
+    """
+    if zipped_file:
+        path_name, file_name = os.path.split(zipped_file)
+        with zipfile.ZipFile(zipped_file, "r") as zip_ref:
+            zip_ref.extractall(path_name)
+            unzipped_file = zipped_file.replace('.zip', '.txt')
+    else:
+        unzipped_file = ""
+    return unzipped_file
+
+
+def download_and_unzip_country_zip(country_code, out_dir='temp'):
+    """
+    downloads and unzipps a geonames country zip like e.g.\
+        http://download.geonames.org/export/dump/AT.zip \
+            and returns the filename of the unzipped file
+
+    :param country_code: The country code of the country to download e.g. AT
+    :type country_code: str
+
+    :param out_dir: a directory path to store the downloaded file
+    :type out_dir: str
+
+    :return: The path of the downloaded and extracted zip
+    :rtype: str
+    """
+
+    zipped_file = download_country_zip(country_code, out_dir=out_dir)
+    if zipped_file:
+        unzipped = unzip_country_zip(zipped_file)
+    else:
+        unzipped = ""
+    return unzipped

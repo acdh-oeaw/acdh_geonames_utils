@@ -22,11 +22,23 @@ class TestAcdh_geonames_utils(unittest.TestCase):
     def tearDown(self):
         """Tear down test fixtures, if any."""
 
-    def test_001_something(self):
+    def test_001_download(self):
         """Test download of zip."""
         good = gn.download_country_zip(good_country_code)
         bad = gn.download_country_zip(bad_country_code)
         self.assertTrue(good.endswith(f"{good_country_code}.zip"))
+        self.assertEqual(bad, "")
+
+    def test_002_download_and_unzip(self):
+        """Test download of zip."""
+        good = gn.download_and_unzip_country_zip(good_country_code)
+        bad = gn.download_and_unzip_country_zip(bad_country_code)
+        self.assertTrue(good.endswith(f"{good_country_code}.txt"))
+        self.assertEqual(bad, "")
+
+    def test_003_unzip(self):
+        """Test download of zip."""
+        bad = gn.unzip_country_zip("")
         self.assertEqual(bad, "")
 
     def test_command_line_interface(self):

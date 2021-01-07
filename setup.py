@@ -15,9 +15,9 @@ requirements = [
     'requests>=2.25',
 ]
 
-setup_requirements = [ ]
+setup_requirements = []
 
-test_requirements = [ ]
+test_requirements = []
 
 setup(
     author="Peter Andorfer",
@@ -41,9 +41,15 @@ setup(
     license="MIT license",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
+    package_data={
+        '': ['fixtures/*.*'],
+    },
     keywords='acdh_geonames_utils',
     name='acdh_geonames_utils',
-    packages=find_packages(include=['acdh_geonames_utils', 'acdh_geonames_utils.*']),
+    packages=find_packages(include=[
+        'acdh_geonames_utils',
+        'acdh_geonames_utils.*']
+    ),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
