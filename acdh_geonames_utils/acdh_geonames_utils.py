@@ -1,10 +1,58 @@
 """Main module."""
+import io
 import os
 import zipfile
 import requests
 import pandas as pd
 
-from . config import GN_DL_URL, GN_PL_HEADERS
+from . config import (
+    GN_DL_URL,
+    GN_PL_HEADERS,
+    FEATURE_CODE_HEADERS,
+    FEATURE_CODE_LANG
+)
+
+
+def dl_feature_codes(lang="en"):
+    """
+    downloads geonames feature_codes
+
+    :param lang: The language of the feature codes
+    :param type: str
+
+    :return: geonames feature codes as string
+    :rtype: str
+    """
+    if lang in FEATURE_CODE_LANG:
+        url = f"{GN_DL_URL}featureCodes_{lang}.txt"
+        r = requests.get(url)
+        if r.status_code == 200:
+            return r.text
+        else:
+            print(f"something weng wrong, status code: {r.status_code}")
+            return ""
+    else:
+        print(f"feature codes not available in selected lang: {lang}")
+        return ""
+
+
+def feature_codes_df(lang="en"):
+    """
+    downloads geonames feature_codes and returns a pandas.DataFrame
+
+    :param lang: The language of the feature codes
+    :param type: str
+
+    :return: geonames feature codes as pandas.DataFrame
+    :rtype: pandas.DataFrame
+    """
+    ft_codes = dl_feature_codes(lang)
+    if ft_codes:
+        data = io.StringIO(ft_codes)
+        df = pd.read_csv(data, sep='\t', names=FEATURE_CODE_HEADERS)
+    else:
+        df = None
+    return df
 
 
 def download_country_zip(country_code, out_dir='temp'):

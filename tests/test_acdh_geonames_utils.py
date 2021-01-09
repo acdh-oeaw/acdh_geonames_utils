@@ -12,6 +12,9 @@ from acdh_geonames_utils import cli
 good_country_code = 'YU'
 bad_country_code = 'BAAAD'
 
+good_ft_code = "en"
+bad_ft_code = "de"
+
 TEST_GN_FILE = os.path.join(
     "./fixtures",
     "AL.txt"
@@ -57,6 +60,18 @@ class TestAcdh_geonames_utils(unittest.TestCase):
         bad_df = gn.donwload_to_df('YUUU')
         self.assertEqual(len(good_df), 1)
         self.assertFalse(bad_df)
+
+    def test_006_dl_ft(self):
+        good = gn.dl_feature_codes(good_ft_code)
+        bad = gn.dl_feature_codes(bad_ft_code)
+        self.assertTrue(good != "")
+        self.assertTrue(bad == "")
+
+    def test_007_dl_ft_as_df(self):
+        good = gn.feature_codes_df(good_ft_code)
+        bad = gn.feature_codes_df(bad_ft_code)
+        self.assertIsNotNone(good)
+        self.assertIsNone(bad)
 
     def test_command_line_interface(self):
         """Test the CLI."""

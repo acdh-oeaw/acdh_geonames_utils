@@ -21,3 +21,19 @@ GN_PL_HEADERS = [
     "timezone",
     "modification date"
 ]
+
+FEATURE_CODE_LANG = [
+    "bg",
+    "en",
+    "nb",
+    "nn",
+    "no",
+    "ru",
+    "sv",
+]
+
+FEATURE_CODE_HEADERS = [
+    "code",
+    "pref_label",
+    "description"
+]
