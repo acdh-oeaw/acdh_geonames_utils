@@ -13,6 +13,31 @@ from . config import (
 )
 
 
+def clean_feature_df(df):
+    """ replace empty description cells and remove nan-rows
+
+    :param df: pandas.Dataframe derived from geonames features
+    :param type: pandas.DataFrame
+
+    :return: a cleaned dataframe
+    :rtype: pandas.DataFrame
+    """
+    df['description'] = df['description'].fillna(df['pref_label'])
+    df['group'] = df['code'].str[0]
+    return df.dropna()
+
+
+def load_feature_codes():
+    """
+    load package copy of feature codes into dataframe
+
+    :return: A pandas.DataFrame with the feature codes
+    :rtype: pandas.DataFrame
+    """
+    df = pd.read_csv('fixtures/features_en.csv')
+    return df
+
+
 def dl_feature_codes(lang="en"):
     """
     downloads geonames feature_codes
