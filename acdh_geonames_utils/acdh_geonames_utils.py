@@ -35,7 +35,7 @@ def load_feature_codes():
     :rtype: pandas.DataFrame
     """
     df = pd.read_csv('fixtures/features_en.csv')
-    return df
+    return clean_feature_df(df)
 
 
 def dl_feature_codes(lang="en"):
@@ -75,9 +75,9 @@ def feature_codes_df(lang="en"):
     if ft_codes:
         data = io.StringIO(ft_codes)
         df = pd.read_csv(data, sep='\t', names=FEATURE_CODE_HEADERS)
+        return clean_feature_df(df)
     else:
-        df = None
-    return df
+        return None
 
 
 def download_country_zip(country_code, out_dir='temp'):
@@ -170,7 +170,7 @@ def countries_as_df(input_file):
     return df
 
 
-def donwload_to_df(country_code, out_dir='temp'):
+def download_to_df(country_code, out_dir='temp'):
     """
     downloads and unzipps a geonames country zip like e.g.\
         http://download.geonames.org/export/dump/AT.zip \

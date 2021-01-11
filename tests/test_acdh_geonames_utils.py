@@ -56,8 +56,8 @@ class TestAcdh_geonames_utils(unittest.TestCase):
 
     def test_005_dl_to_df(self):
         """Test loading download into pandas.DataFrame"""
-        good_df = gn.donwload_to_df('YU')
-        bad_df = gn.donwload_to_df('YUUU')
+        good_df = gn.download_to_df('YU')
+        bad_df = gn.download_to_df('YUUU')
         self.assertEqual(len(good_df), 1)
         self.assertFalse(bad_df)
 
