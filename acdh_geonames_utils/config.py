@@ -15,7 +15,7 @@ GN_PL_HEADERS = [
     "admin2 code",
     "admin3 code",
     "admin4 code",
-    "population ",
+    "population",
     "elevation",
     "dem",
     "timezone",
