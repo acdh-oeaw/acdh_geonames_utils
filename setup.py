@@ -12,7 +12,7 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [
     'Click>=7.0',
-    'requests>=2.25',
+    'requests',
     'pandas>=1.1',
 ]
 
