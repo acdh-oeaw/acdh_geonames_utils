@@ -13,6 +13,7 @@ class Test_utils(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures, if any."""
+        self.gn_obj = gn_client.doc_as_object(RDF_URL)
 
     def tearDown(self):
         """Tear down test fixtures, if any."""
@@ -20,3 +21,7 @@ class Test_utils(unittest.TestCase):
     def test_001_parse_url(self):
         doc = gn_client.fetch_rdf(RDF_URL)
         self.assertEqual(f"{type(doc)}", "<class 'lxml.etree._Element'>")
+
+    def test_002_doc_as_object(self):
+        self.assertEqual(RDF_URL, self.gn_obj['geonameid'])
+        self.assertEqual(self.gn_obj['name'], 'Linz')
