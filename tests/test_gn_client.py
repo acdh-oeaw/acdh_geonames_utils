@@ -13,19 +13,23 @@ class Test_utils(unittest.TestCase):
 
     def setUp(self):
         """Set up test fixtures, if any."""
-        self.gn_obj = gn_client.doc_as_object(RDF_URL)
+        # self.gn_obj = gn_client.doc_as_object(RDF_URL)
 
     def tearDown(self):
         """Tear down test fixtures, if any."""
 
-    def test_001_parse_url(self):
-        doc = gn_client.fetch_rdf(RDF_URL)
-        self.assertEqual(f"{type(doc)}", "<class 'lxml.etree._Element'>")
+    # def test_001_parse_url(self):
+    #     doc = gn_client.fetch_rdf(RDF_URL)
+    #     self.assertEqual(f"{type(doc)}", "<class 'lxml.etree._Element'>")
 
-    def test_002_doc_as_object(self):
-        self.assertEqual(RDF_URL, self.gn_obj['geonameid'])
-        self.assertEqual(self.gn_obj['name'], 'Linz')
-        self.assertEqual(
-            f"{type(self.gn_obj['alternatenames'])}",
-            "<class 'list'>"
-        )
+    # def test_002_doc_as_object(self):
+    #     self.assertEqual(RDF_URL, self.gn_obj['geonameid'])
+    #     self.assertEqual(self.gn_obj['name'], 'Linz')
+    #     self.assertEqual(
+    #         f"{type(self.gn_obj['alternatenames'])}",
+    #         "<class 'list'>"
+    #     )
+
+    def test__003_dl_rdfxml(self):
+        dl = gn_client.dl_rdfxml(RDF_URL)
+        self.assertEqual(dl, "gn_rdf__2772400.xml")

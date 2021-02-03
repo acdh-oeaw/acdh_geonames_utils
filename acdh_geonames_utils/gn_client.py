@@ -1,7 +1,7 @@
 import lxml.etree as ET
 import requests
 
-from acdh_geonames_utils.utils import sanitize_rdf_url
+from acdh_geonames_utils.utils import sanitize_rdf_url, extract_id
 
 NS_MAP = {
     "gn": "http://www.geonames.org/ontology#",
@@ -16,7 +16,7 @@ NS_MAP = {
 
 
 def fetch_rdf(gn_id):
-    """downloads the rdf/xml of the given geonames url/id and returns an lxml.etree
+    """retrieves the rdf/xml of the given geonames url/id and returns an lxml.etree
     :param url: A GND-URL or ID,
     e.g. https://www.geonames.org/2772400/linz.html, 2772400
     :type url: str
@@ -27,6 +27,21 @@ def fetch_rdf(gn_id):
     res = requests.get(gn_rdf_uri)
     doc = ET.fromstring(res.content)
     return doc
+
+
+def dl_rdfxml(gn_id):
+    """donloads the rdf/xml of the given geonames url/id and returns the file-name
+    :param url: A GND-URL or ID,
+    e.g. https://www.geonames.org/2772400/linz.html, 2772400
+    :type url: str
+    :return: the filename, something like gn_rdf__{gn_id}.xml
+    :rtype: str
+    """
+    file_name = f"gn_rdf__{extract_id(gn_id)}.xml"
+    doc = fetch_rdf(gn_id)
+    with open(file_name, 'wb') as f:
+        f.write(ET.tostring(doc, encoding="UTF-8"))
+    return file_name
 
 
 def doc_as_object(gn_id):
