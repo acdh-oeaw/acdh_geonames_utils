@@ -25,3 +25,7 @@ class Test_utils(unittest.TestCase):
     def test_002_doc_as_object(self):
         self.assertEqual(RDF_URL, self.gn_obj['geonameid'])
         self.assertEqual(self.gn_obj['name'], 'Linz')
+        self.assertEqual(
+            f"{type(self.gn_obj['alternatenames'])}",
+            "<class 'list'>"
+        )

@@ -15,7 +15,8 @@ def extract_id(url):
 
 def sanitize_rdf_url(url):
     """returns the url to the entitiy rdf-endpoint
-    :param url: A GND-URL or id, e.g. https://www.geonames.org/2772400/linz.html, 27772400
+    :param url: A GND-URL or id, e.g.
+    https://www.geonames.org/2772400/linz.html, 27772400
     :type url: str
     :return: The geonames rdf-url, "https://sws.geonames.org/2772400/about.rdf"
     :rtype: str
