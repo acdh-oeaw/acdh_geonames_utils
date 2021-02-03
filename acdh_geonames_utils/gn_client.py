@@ -30,7 +30,7 @@ def fetch_rdf(gn_id):
 
 
 def dl_rdfxml(gn_id):
-    """donloads the rdf/xml of the given geonames url/id and returns the file-name
+    """downloads the rdf/xml of the given geonames url/id and returns the file-name
     :param url: A GND-URL or ID,
     e.g. https://www.geonames.org/2772400/linz.html, 2772400
     :type url: str
@@ -44,14 +44,21 @@ def dl_rdfxml(gn_id):
     return file_name
 
 
-def doc_as_object(gn_id):
+def gn_as_object(gn_id):
+
     doc = fetch_rdf(gn_id)
     gn_obj = {}
-    gn_obj['geonameid'] = doc.xpath(
-        ".//rdfs:isDefinedBy/@rdf:resource",
-        namespaces=NS_MAP
-    )[0]
+    gn_obj['geonameid'] = extract_id(
+            doc.xpath(
+                ".//rdfs:isDefinedBy/@rdf:resource",
+                namespaces=NS_MAP
+            )[0]
+        )
     gn_obj['name'] = doc.xpath(
+        ".//gn:name",
+        namespaces=NS_MAP
+    )[0].text
+    gn_obj['asciiname'] = doc.xpath(
         ".//gn:name",
         namespaces=NS_MAP
     )[0].text
@@ -59,4 +66,28 @@ def doc_as_object(gn_id):
         ".//gn:alternateName/text()",
         namespaces=NS_MAP
     )
+    gn_obj['asciiname'] = doc.xpath(
+        ".//gn:name",
+        namespaces=NS_MAP
+    )[0].text
+    gn_obj['latitude'] = float(doc.xpath(
+        ".//wgs84_pos:lat",
+        namespaces=NS_MAP
+    )[0].text)
+    gn_obj['longitude'] = float(doc.xpath(
+        ".//wgs84_pos:long",
+        namespaces=NS_MAP
+    )[0].text)
+    gn_obj['country code'] = doc.xpath(
+        ".//gn:countryCode",
+        namespaces=NS_MAP
+    )[0].text
+    gn_obj['feature class'] = doc.xpath(
+        ".//gn:featureClass/@rdf:resource",
+        namespaces=NS_MAP
+    )[0].split('#')[1]
+    gn_obj['feature code'] = doc.xpath(
+        ".//gn:featureCode/@rdf:resource",
+        namespaces=NS_MAP
+    )[0].split('#')[1]
     return gn_obj
