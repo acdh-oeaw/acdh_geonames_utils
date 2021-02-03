@@ -14,6 +14,7 @@ requirements = [
     'Click>=7.0',
     'requests',
     'pandas>=1.1',
+    'lxml>4.6',
 ]
 
 setup_requirements = []

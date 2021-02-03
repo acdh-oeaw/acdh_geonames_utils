@@ -1,4 +1,5 @@
 GN_DL_URL = "http://download.geonames.org/export/dump/"
+GN_RDF_TMPL = "https://sws.geonames.org/{}/about.rdf"
 
 GN_PL_HEADERS = [
     "geonameid",
