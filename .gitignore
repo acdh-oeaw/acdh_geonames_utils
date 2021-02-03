@@ -108,3 +108,5 @@ ENV/
 # other things
 temp
 .~lock.*
+
+gn_rdf__*
