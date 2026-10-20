@@ -1,6 +1,6 @@
 [project]
 name = "acdh-geonames-utils"
-version = "0.1.0"
+version = "1.0.0"
 description = "Utility functions to work with GeoNames"
 readme = "README.md"
 authors = [
