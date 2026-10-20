@@ -1,24 +1,17 @@
-#!/usr/bin/env python
-
 """Tests for `acdh_geonames_utils` package."""
 
 import os
 import unittest
-from click.testing import CliRunner
 
-from acdh_geonames_utils import acdh_geonames_utils as gn
-from acdh_geonames_utils import cli
+from src.acdh_geonames_utils import acdh_geonames_utils as gn
 
-good_country_code = 'YU'
-bad_country_code = 'BAAAD'
+good_country_code = "YU"
+bad_country_code = "BAAAD"
 
 good_ft_code = "en"
 bad_ft_code = "de"
 
-TEST_GN_FILE = os.path.join(
-    "./fixtures",
-    "AL.txt"
-)
+TEST_GN_FILE = os.path.join("./fixtures", "AL.txt")
 
 
 class TestAcdh_geonames_utils(unittest.TestCase):
@@ -56,8 +49,8 @@ class TestAcdh_geonames_utils(unittest.TestCase):
 
     def test_005_dl_to_df(self):
         """Test loading download into pandas.DataFrame"""
-        good_df = gn.download_to_df('YU')
-        bad_df = gn.download_to_df('YUUU')
+        good_df = gn.download_to_df("YU")
+        bad_df = gn.download_to_df("YUUU")
         self.assertEqual(len(good_df), 1)
         self.assertFalse(bad_df)
 
@@ -72,13 +65,3 @@ class TestAcdh_geonames_utils(unittest.TestCase):
         bad = gn.feature_codes_df(bad_ft_code)
         self.assertIsNotNone(good)
         self.assertIsNone(bad)
-
-    def test_command_line_interface(self):
-        """Test the CLI."""
-        runner = CliRunner()
-        result = runner.invoke(cli.main)
-        assert result.exit_code == 0
-        assert 'acdh_geonames_utils.cli.main' in result.output
-        help_result = runner.invoke(cli.main, ['--help'])
-        assert help_result.exit_code == 0
-        assert '--help  Show this message and exit.' in help_result.output

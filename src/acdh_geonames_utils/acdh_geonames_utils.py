@@ -1,20 +1,17 @@
 """Main module."""
+
 import io
 import os
 import zipfile
-import requests
-import pandas as pd
 
-from . config import (
-    GN_DL_URL,
-    GN_PL_HEADERS,
-    FEATURE_CODE_HEADERS,
-    FEATURE_CODE_LANG
-)
+import pandas as pd
+import requests
+
+from .config import FEATURE_CODE_HEADERS, FEATURE_CODE_LANG, GN_DL_URL, GN_PL_HEADERS
 
 
 def clean_feature_df(df):
-    """ replace empty description cells and remove nan-rows
+    """replace empty description cells and remove nan-rows
 
     :param df: pandas.Dataframe derived from geonames features
     :param type: pandas.DataFrame
@@ -22,8 +19,8 @@ def clean_feature_df(df):
     :return: a cleaned dataframe
     :rtype: pandas.DataFrame
     """
-    df['description'] = df['description'].fillna(df['pref_label'])
-    df['group'] = df['code'].str[0]
+    df["description"] = df["description"].fillna(df["pref_label"])
+    df["group"] = df["code"].str[0]
     return df.dropna()
 
 
@@ -34,7 +31,7 @@ def load_feature_codes():
     :return: A pandas.DataFrame with the feature codes
     :rtype: pandas.DataFrame
     """
-    df = pd.read_csv('fixtures/features_en.csv')
+    df = pd.read_csv("fixtures/features_en.csv")
     return clean_feature_df(df)
 
 
@@ -74,13 +71,13 @@ def feature_codes_df(lang="en"):
     ft_codes = dl_feature_codes(lang)
     if ft_codes:
         data = io.StringIO(ft_codes)
-        df = pd.read_csv(data, sep='\t', names=FEATURE_CODE_HEADERS)
+        df = pd.read_csv(data, sep="\t", names=FEATURE_CODE_HEADERS)
         return clean_feature_df(df)
     else:
         return None
 
 
-def download_country_zip(country_code, out_dir='temp'):
+def download_country_zip(country_code, out_dir="temp"):
     """
     downloads a geonames country zip like e.g.\
         http://download.geonames.org/export/dump/AT.zip \
@@ -101,9 +98,8 @@ def download_country_zip(country_code, out_dir='temp'):
     os.makedirs(out_dir, exist_ok=True)
     r = requests.get(url, stream=True)
     if r.status_code == 200:
-        with open(save_path, 'wb') as fd:
-            for chunk in r.iter_content(chunk_size=128):
-                fd.write(chunk)
+        with open(save_path, "wb") as fd:
+            fd.writelines(r.iter_content(chunk_size=128))
         return save_path
     else:
         return ""
@@ -121,16 +117,16 @@ def unzip_country_zip(zipped_file):
     :rtype: str
     """
     if zipped_file:
-        path_name, file_name = os.path.split(zipped_file)
+        path_name, _file_name = os.path.split(zipped_file)
         with zipfile.ZipFile(zipped_file, "r") as zip_ref:
             zip_ref.extractall(path_name)
-            unzipped_file = zipped_file.replace('.zip', '.txt')
+            unzipped_file = zipped_file.replace(".zip", ".txt")
     else:
         unzipped_file = ""
     return unzipped_file
 
 
-def download_and_unzip_country_zip(country_code, out_dir='temp'):
+def download_and_unzip_country_zip(country_code, out_dir="temp"):
     """
     downloads and unzipps a geonames country zip like e.g.\
         http://download.geonames.org/export/dump/AT.zip \
@@ -166,11 +162,11 @@ def countries_as_df(input_file):
     :rtype: pandas.Dataframe
     """
 
-    df = pd.read_csv(input_file, sep='\t', names=GN_PL_HEADERS)
+    df = pd.read_csv(input_file, sep="\t", names=GN_PL_HEADERS)
     return df
 
 
-def download_to_df(country_code, out_dir='temp'):
+def download_to_df(country_code, out_dir="temp"):
     """
     downloads and unzipps a geonames country zip like e.g.\
         http://download.geonames.org/export/dump/AT.zip \

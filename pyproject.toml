@@ -1,0 +1,24 @@
+[project]
+name = "acdh-geonames-utils"
+version = "0.1.0"
+description = "Utility functions to work with GeoNames"
+readme = "README.md"
+authors = [
+    { name = "Peter Andorfer", email = "peter.andorfer@oeaw.ac.at" },
+]
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = [
+    "lxml>=6.1.3",
+    "pandas>=3.0.6",
+    "requests>=2.34.2",
+]
+[project.urls]
+Repository = "https://github.com/acdh-oeaw/acdh_geonames_utils"
+
+[dependency-groups]
+dev = [
+    "coverage>=7.16.2",
+    "pytest>=9.1.1",
+    "ruff>=0.17.1",
+]

@@ -1,15 +1,13 @@
-#!/usr/bin/env python
-
 """Tests for `acdh_geonames_utils.utils` module."""
 
 import unittest
 
-import acdh_geonames_utils.utils as gn_utils
+import src.acdh_geonames_utils.utils as gn_utils
 
 GOOD_IDS = [
     "https://sws.geonames.org/2772400/about.rdf",
     "https://www.geonames.org/2772400/linz.html",
-    "2772400"
+    "2772400",
 ]
 GOOD_ID = "2772400"
 RDF_URL = "https://sws.geonames.org/2772400/about.rdf"
