@@ -1,7 +1,7 @@
 import lxml.etree as ET
 import requests
 
-from acdh_geonames_utils.utils import sanitize_rdf_url, extract_id
+from src.acdh_geonames_utils.utils import extract_id, sanitize_rdf_url
 
 NS_MAP = {
     "gn": "http://www.geonames.org/ontology#",
@@ -11,7 +11,7 @@ NS_MAP = {
     "owl": "http://www.w3.org/2002/07/owl#",
     "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
     "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
-    "wgs84_pos": "http://www.w3.org/2003/01/geo/wgs84_pos#"
+    "wgs84_pos": "http://www.w3.org/2003/01/geo/wgs84_pos#",
 }
 
 
@@ -39,7 +39,7 @@ def dl_rdfxml(gn_id):
     """
     file_name = f"gn_rdf__{extract_id(gn_id)}.xml"
     doc = fetch_rdf(gn_id)
-    with open(file_name, 'wb') as f:
+    with open(file_name, "wb") as f:
         f.write(ET.tostring(doc, encoding="UTF-8"))
     return file_name
 
@@ -48,46 +48,24 @@ def gn_as_object(gn_id):
 
     doc = fetch_rdf(gn_id)
     gn_obj = {}
-    gn_obj['geonameid'] = extract_id(
-            doc.xpath(
-                ".//rdfs:isDefinedBy/@rdf:resource",
-                namespaces=NS_MAP
-            )[0]
-        )
-    gn_obj['name'] = doc.xpath(
-        ".//gn:name",
-        namespaces=NS_MAP
-    )[0].text
-    gn_obj['asciiname'] = doc.xpath(
-        ".//gn:name",
-        namespaces=NS_MAP
-    )[0].text
-    gn_obj['alternatenames'] = doc.xpath(
-        ".//gn:alternateName/text()",
-        namespaces=NS_MAP
+    gn_obj["geonameid"] = extract_id(
+        doc.xpath(".//rdfs:isDefinedBy/@rdf:resource", namespaces=NS_MAP)[0]
     )
-    gn_obj['asciiname'] = doc.xpath(
-        ".//gn:name",
-        namespaces=NS_MAP
-    )[0].text
-    gn_obj['latitude'] = float(doc.xpath(
-        ".//wgs84_pos:lat",
-        namespaces=NS_MAP
-    )[0].text)
-    gn_obj['longitude'] = float(doc.xpath(
-        ".//wgs84_pos:long",
-        namespaces=NS_MAP
-    )[0].text)
-    gn_obj['country code'] = doc.xpath(
-        ".//gn:countryCode",
-        namespaces=NS_MAP
-    )[0].text
-    gn_obj['feature class'] = doc.xpath(
-        ".//gn:featureClass/@rdf:resource",
-        namespaces=NS_MAP
-    )[0].split('#')[1]
-    gn_obj['feature code'] = doc.xpath(
-        ".//gn:featureCode/@rdf:resource",
-        namespaces=NS_MAP
-    )[0].split('#')[1]
+    gn_obj["name"] = doc.xpath(".//gn:name", namespaces=NS_MAP)[0].text
+    gn_obj["asciiname"] = doc.xpath(".//gn:name", namespaces=NS_MAP)[0].text
+    gn_obj["alternatenames"] = doc.xpath(
+        ".//gn:alternateName/text()", namespaces=NS_MAP
+    )
+    gn_obj["asciiname"] = doc.xpath(".//gn:name", namespaces=NS_MAP)[0].text
+    gn_obj["latitude"] = float(doc.xpath(".//wgs84_pos:lat", namespaces=NS_MAP)[0].text)
+    gn_obj["longitude"] = float(
+        doc.xpath(".//wgs84_pos:long", namespaces=NS_MAP)[0].text
+    )
+    gn_obj["country code"] = doc.xpath(".//gn:countryCode", namespaces=NS_MAP)[0].text
+    gn_obj["feature class"] = doc.xpath(
+        ".//gn:featureClass/@rdf:resource", namespaces=NS_MAP
+    )[0].split("#")[1]
+    gn_obj["feature code"] = doc.xpath(
+        ".//gn:featureCode/@rdf:resource", namespaces=NS_MAP
+    )[0].split("#")[1]
     return gn_obj
