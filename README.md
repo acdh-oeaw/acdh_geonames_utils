@@ -1,5 +1,7 @@
 # acdh_geonames_utils
 
+[![codecov](https://codecov.io/gh/acdh-oeaw/acdh-geonames-utils/graph/badge.svg?token=w38AlUjm8X)](https://codecov.io/gh/acdh-oeaw/acdh-geonames-utils)
+
 Utility functions to interact with geonames.org
 
 ## Features
