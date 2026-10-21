@@ -7,7 +7,12 @@ import zipfile
 import pandas as pd
 import requests
 
-from .config import FEATURE_CODE_HEADERS, FEATURE_CODE_LANG, GN_DL_URL, GN_PL_HEADERS
+from acdh_geonames_utils.config import (
+    FEATURE_CODE_HEADERS,
+    FEATURE_CODE_LANG,
+    GN_DL_URL,
+    GN_PL_HEADERS,
+)
 
 
 def clean_feature_df(df):

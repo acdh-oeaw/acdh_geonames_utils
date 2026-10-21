@@ -1,7 +1,7 @@
 import lxml.etree as ET
 import requests
 
-from src.acdh_geonames_utils.utils import extract_id, sanitize_rdf_url
+from acdh_geonames_utils.utils import extract_id, sanitize_rdf_url
 
 NS_MAP = {
     "gn": "http://www.geonames.org/ontology#",

@@ -1,6 +1,6 @@
 import re
 
-from src.acdh_geonames_utils.config import GN_RDF_TMPL
+from acdh_geonames_utils.config import GN_RDF_TMPL
 
 
 def extract_id(url):

@@ -15,7 +15,7 @@ resolution-markers = [
 
 [[package]]
 name = "acdh-geonames-utils"
-version = "1.0.0"
+version = "1.0.1"
 source = { editable = "." }
 dependencies = [
     { name = "lxml" },
